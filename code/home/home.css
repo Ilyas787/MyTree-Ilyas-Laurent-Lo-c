@@ -5,23 +5,26 @@ body, html {
 }
 
 .navbar-brand {
-    font-size: 1.5em; /* Augmente la taille du texte */
-    font-weight: bold; /* Met le texte en gras */
+    font-size: 1.5em;
+    font-weight: bold;
+}
+
+.navbar-custom, .navbar {
+    background-color: black !important; /* Utilisez !important pour garantir que le style est appliqué */
 }
 
 .nav-link {
-    font-size: 1.2em;  /* Taille existante */
-    transition: background-color 0.3s ease; /* Transition fluide pour le changement de couleur */
+    font-size: 1.2em;
+    transition: background-color 0.3s ease;
 }
 
 .nav-link:hover {
-    background-color: rgb(15, 96, 21); /* Change la couleur de fond en jaune */
+    background-color: rgb(15, 96, 21); /* Change la couleur de fond en vert lors du survol */
 }
-
 
 main {
     position: relative;
-    background-image: url('tree.jpg');
+    background-image: url('../images/tree.jpg');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
