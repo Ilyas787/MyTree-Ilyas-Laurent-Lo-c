@@ -1,0 +1,24 @@
+.tree-container{
+    position: absolute;
+    overflow: hidden;
+}
+
+svg {
+    width: 100%;
+    height: 90vh;
+    border: 2px;
+    margin: 20px;
+    padding: 0;
+}
+
+.node {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+}
+
+p{
+    width: 10%;
+    height: 10%;
+}
