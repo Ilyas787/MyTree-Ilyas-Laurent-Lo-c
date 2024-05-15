@@ -14,7 +14,7 @@ body, html {
 }
 
 .navbar-custom, .navbar {
-    background-color: black !important;
+    background-color: black !important; /* Utilisez !important pour garantir que le style est appliqué */
 }
 
 .nav-link {
@@ -23,7 +23,7 @@ body, html {
 }
 
 .nav-link:hover {
-    background-color: rgb(15, 96, 21);
+    background-color: rgb(15, 96, 21); /* Change la couleur de fond en vert lors du survol */
 }
 
 main {
@@ -50,47 +50,7 @@ main {
     z-index: 0;
 }
 
-.form-container {
-    position: relative;
-    z-index: 1;
-    background: rgba(0, 0, 0, 0.85);
-    padding: 30px;
-    border-radius: 10px;
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
-    width: 400px;
-}
 
-h2 {
-    margin-bottom: 20px;
-}
 
-.form-group {
-    margin-bottom: 10px;
-}
 
-.btn-primary {
-    background-color: rgb(15, 96, 21);
-    border-color: rgb(15, 96, 21);
-    color: white;
-}
 
-.btn-primary:hover {
-    background-color: rgba(15, 96, 21, 0.85);
-    border-color: rgba(15, 96, 21, 0.85);
-    color: white;
-}
-
-.transparent-button {
-    background: transparent;
-    border: 2px solid white;
-    color: white;
-    font-size: 1em;
-    padding: 10px 20px;
-    margin: 10px;
-    transition: all 0.3s ease;
-}
-
-.transparent-button:hover {
-    background-color: white;
-    color: black;
-}

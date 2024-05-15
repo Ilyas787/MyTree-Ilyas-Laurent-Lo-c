@@ -2,11 +2,15 @@ body, html {
     height: 100%;
     margin: 0;
     font-family: Arial, sans-serif;
+    padding-top: 0px; /* Ajustez cette valeur pour qu'elle corresponde à la hauteur de votre navbar */
 }
 
-.navbar-brand {
-    font-size: 1.5em;
-    font-weight: bold;
+.navbar-custom, .navbar {
+    position: fixed; /* Fixe la navbar en haut de la page */
+    width: 100%; /* S'étend sur toute la largeur de la page */
+    top: 0; /* Positionne la navbar tout en haut de la page */
+    z-index: 1000; /* S'assure que la navbar reste au-dessus des autres éléments */
+    background-color: black !important; /* S'assure que le fond est toujours noir */
 }
 
 .navbar-custom, .navbar {

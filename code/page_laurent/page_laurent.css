@@ -1,0 +1,95 @@
+body, html {
+    height: 100%;
+    margin: 0;
+    font-family: Arial, sans-serif;
+    padding-top: 0px; /* Ajustez cette valeur pour qu'elle corresponde à la hauteur de votre navbar */
+}
+
+.navbar-custom, .navbar {
+    position: fixed; /* Fixe la navbar en haut de la page */
+    width: 100%; /* S'étend sur toute la largeur de la page */
+    top: 0; /* Positionne la navbar tout en haut de la page */
+    z-index: 1000; /* S'assure que la navbar reste au-dessus des autres éléments */
+    background-color: black !important; /* S'assure que le fond est toujours noir */
+}
+
+.navbar-custom, .navbar {
+    background-color: black !important; /* Utilisez !important pour garantir que le style est appliqué */
+}
+
+.nav-link {
+    font-size: 1.2em;
+    transition: background-color 0.3s ease;
+}
+
+.nav-link:hover {
+    background-color: rgb(15, 96, 21); /* Change la couleur de fond en vert lors du survol */
+}
+
+main {
+    position: relative;
+    background-image: url('../images/tree.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: white;
+}
+
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 0;
+}
+
+.open-modal-btn {
+    position: fixed;
+    left: 20px;
+    bottom: 20px;
+}
+
+
+.modal-custom .modal-content {
+    background-color: black; /* Assure que le fond du contenu du modal est noir */
+    color: white; /* Assure que le texte est blanc */
+}
+
+.modal-custom .modal-header, .modal-body, .modal-footer {
+    background-color: black; /* Assure que chaque section du modal a également un fond noir */
+    color: white;
+}
+
+.modal-custom .btn-close {
+    filter: invert(1); /* Icône de fermeture blanche pour mieux ressortir sur fond noir */
+}
+
+.modal-custom .form-control, .modal-custom .form-control:focus {
+    background-color: #333; /* Fond des champs sombre pour les entrées */
+    color: white; /* Texte des champs blanc */
+    border: 1px solid #444; /* Légère bordure pour distinguer les champs */
+}
+
+.modal-custom .form-label {
+    color: white; /* Assure que les labels des champs sont bien en blanc */
+}
+
+.modal-custom .btn-success {
+    background-color: rgb(15, 96, 21); /* Bouton vert Bootstrap */
+    border-color: rgb(15, 96, 21); /* Bordure du bouton vert */
+}
+
+.btn-close-white, .btn-close-white:focus {
+    filter: invert(1); /* Inverse la couleur du bouton de fermeture pour visibilité */
+}
+
+.modal-custom .btn-close {
+    border: none; /* Retire toute bordure du bouton de fermeture pour un look plus net */
+}
