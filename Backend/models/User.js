@@ -2,6 +2,22 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 
 const UserSchema = new mongoose.Schema({
+  name: {
+    type: String,
+    required: true
+  },
+  dateOfBirth: {
+    type: String,
+    required: false
+  },
+  sexe: {
+    type: String,
+    required: true
+  },
+  yearOfDeath: {
+    type: String,
+    required: false
+  },
   email: {
     type: String,
     required: true,
@@ -11,13 +27,9 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  yearOfBirth: {
-    type: String,
-    required: false
-  },
-  name: {
-    type: String,
-    required: true
+  spouse: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User'
   }
 });
 
@@ -38,5 +50,7 @@ UserSchema.methods.comparePassword = function(candidatePassword, cb) {
     cb(err, isMatch);
   });
 };
+
+UserSchema.index({ email: 1 }, { unique: true });
 
 module.exports = mongoose.model('User', UserSchema);
