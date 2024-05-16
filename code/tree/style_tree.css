@@ -9,6 +9,7 @@ svg {
     border: 2px;
     margin: 20px;
     padding: 0;
+    z-index: 100;
 }
 
 .node {
