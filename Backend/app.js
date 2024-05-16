@@ -5,6 +5,7 @@ const config = require('./config/db');
 const mongoose = require('mongoose');
 const cors = require('cors');
 
+
 app.use(cors());
 
 mongoose.connect(config.url, config.options)
@@ -12,8 +13,6 @@ mongoose.connect(config.url, config.options)
     console.log('Connected to MongoDB');
   })
   .catch(err => console.error('Failed to connect to MongoDB:', err));
-
-
 
 
 app.use(express.json());

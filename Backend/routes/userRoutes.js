@@ -1,18 +1,24 @@
 const express = require('express');
 const router = express.Router();
 const User = require('../models/User');
+const Relative = require('../models/Relative');
 var bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const passport = require('passport');
 require('dotenv').config({ path: 'secret.env' });
+const multer = require('multer');
+
+const upload = multer();
 
 const secret = process.env.JWT_SECRET;
 if (!secret) {
   throw new Error('JWT_SECRET must be defined in environment variables');
 }
 
-router.post('/register', async (req, res) => {
+router.post('/register', upload.none(),async (req, res) => {
+
   try {
+    console.log("body of register",req.body);
     // Récupérer les données du corps de la requête
     const { name, dateOfBirth, sexe, email, password } = req.body;
 
@@ -52,6 +58,7 @@ router.post('/register', async (req, res) => {
 
 
 router.post('/login', (req, res) => {
+  res.header("Access-Control-Allow-Origin", "*");
   const token = req.headers.authorization.split(' ')[1];
 
   try {
@@ -77,6 +84,7 @@ router.post('/login', (req, res) => {
 });
 
 router.post('/', async (req, res) => {
+  res.header("Access-Control-Allow-Origin", "*");
   const { email, password } = req.body;
 
   const user = await User.findOne({ email });
@@ -95,6 +103,7 @@ router.post('/', async (req, res) => {
 });
 
 router.post('/:id/marry', async (req, res) => {
+  res.header("Access-Control-Allow-Origin", "*");
   try {
     const { id } = req.params;
     const { spouseId } = req.body;
@@ -126,27 +135,56 @@ router.post('/:id/marry', async (req, res) => {
   }
 });
 
-// Add a parent to a user
-router.post('/:id/add-parent', async (req, res) => {
+router.post('/add-user', upload.none(),async (req, res) => {
   try {
-    const { id } = req.params;
-    const { parentId } = req.body;
-
-
-    const user = await User.findById(id);
-    if (!user) {
-      return res.status(404).json({ message: 'User not found' });
+    //console.log("body of add-user",req.body);
+    // Récupérer les données du corps de la requête
+    const { name, relation, dateOfBirth, sexe, hostname} = req.body;
+    //console.log("yo", name, relation, dateOfBirth, sexe);
+    // Vérifier si toutes les données requises sont présentes
+    if (!name || !relation || !dateOfBirth  || !sexe || !hostname) {
+      return res.status(400).json({ message: 'All fields are required' });
     }
+    // Create a new user
+    const newUser = new Relative({
+      name,
+      relation,
+      dateOfBirth,
+      sexe
+    });
+    console.log("nouveau realtive", newUser);
+    await newUser.save();
+    // Envoyer une réponse avec un message simple
+    res.status(201).json({ message: 'User registered successfully', newUser });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+});
+
+// Add a parent to a user
+router.post('/relatives', async (req, res) => {
+  console.log("oui");
+  try {
+    console.log("add-parent", req.body);
+    const { hostname , name } = req.body;
 
 
-    const parent = await User.findById(parentId);
+    const parent = await Relative.findOne({name: name});
     if (!parent) {
       return res.status(404).json({ message: 'Parent not found' });
     }
+    console.log("pere", parent);
 
-
-    user.parents.push(parent._id);
-    await user.save();
+    const user = await User.findOneAndUpdate(
+      {name: hostname},
+      {parentsId: parent._id },
+      {new: true}
+    );
+    console.log("use", user);
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
 
     res.status(200).json({ message: 'Parent added successfully' });
   } catch (error) {
@@ -156,10 +194,9 @@ router.post('/:id/add-parent', async (req, res) => {
 });
 
 // Add a child to a user
-router.post('/:id/add-child', async (req, res) => {
+router.post('/add-child', async (req, res) => {
   try {
-    const { id } = req.params;
-    const { childId } = req.body;
+    const { id, childId } = req.body;
 
 
     const user = await User.findById(id);
@@ -179,9 +216,10 @@ router.post('/:id/add-child', async (req, res) => {
 
     res.status(200).json({ message: 'Child added successfully' });
   } catch (error) {
-    console.error(error);
+    console.error(error.message);
     res.status(500).json({ message: 'Internal server error' });
   }
 });
+
 
 module.exports = router;

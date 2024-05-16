@@ -30,6 +30,9 @@ const UserSchema = new mongoose.Schema({
   spouse: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User'
+  },
+  parentsId: {
+    type: String
   }
 });
 

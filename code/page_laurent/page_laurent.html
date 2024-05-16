@@ -44,22 +44,33 @@
                         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <form>
-                            <div class="mb-3">
-                                <label for="memberLastName" class="form-label">Nom</label>
-                                <input type="text" class="form-control" id="memberLastName" required>
+                        <form id="relationForm">
+
+
+                            <div class="form-group">
+                                <label for="name">Nom - prénom</label>
+                                <input type="text" id="name" name="name" class="form-control" required>
                             </div>
-                            <div class="mb-3">
-                                <label for="memberFirstName" class="form-label">Prénom</label>
-                                <input type="text" class="form-control" id="memberFirstName" required>
+                        
+                            <div class="form-group">
+                                <label for="relation">Relation</label>
+                                <select id="relation" name="relation" class="form-control" required>
+                                    <option value="pere">Père</option>
+                                    <option value="mere">Mère</option>
+                                    <option value="child">enfant</option>
+                                </select>
                             </div>
-                            <div class="mb-3">
-                                <label for="relation" class="form-label">Qui est cette personne pour moi ?</label>
-                                <input type="text" class="form-control" id="relation" required>
+                            <div class="form-group">
+                                <label for="dateOfBirth">Date de naissance</label>
+                                <input type="date" id="dateOfBirth" name="dateOfBirth" class="form-control" required>
                             </div>
-                            <div class="mb-3">
-                                <label for="birthDate" class="form-label">Date de naissance</label>
-                                <input type="date" class="form-control" id="birthDate" required>
+
+                            <div class="form-group">
+                                <label for="sexe">Sexe</label>
+                                <select id="sexe" name="sexe" class="form-control" required>
+                                    <option value="male">Homme</option>
+                                    <option value="female">Femme</option>
+                                </select>
                             </div>
                             <div class="mb-3">
                                 <label for="deathDate" class="form-label">Date de décès (facultative)</label>
@@ -69,12 +80,99 @@
                                 <label for="photo" class="form-label">Photo (facultative)</label>
                                 <input type="file" class="form-control" id="photo">
                             </div>
+                            <div class="form-group">
+                                <label for="hostname">Your name so we can be sure it is you !</label>
+                                <input type="hostname" id="hostname" name="hostname" class="form-control" required>
+                            </div>
                             <button type="submit" class="btn btn-success">Ajouter</button>
                         </form>
                     </div>
                 </div>
             </div>
         </div>
+        <script>
+
+            async function removeFieldById(fieldId) {
+                try {
+                    const field = document.getElementById(fieldId);
+
+                if (field) {
+                    const label = field.previousElementSibling;
+                    const parent = field.parentNode;
+
+                    if (label && label.tagName === 'hostname') {
+                        parent.removeChild(label); // Enlève le label associé
+                    }
+                    parent.removeChild(field); // Enlève le champ d'entrée
+                    console.log(`${fieldId} field removed`);
+                } else {
+                    console.log(`${fieldId} field not found`);
+                }
+                }
+                catch (error) {
+                console.error('Erreur lors de la requête:', error);
+              }
+            }
+                
+
+        document.getElementById('relationForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Empêche la soumission automatique du formulaire.
+            var form = this;
+            const relation = document.getElementById('relation');
+            const typeOfRelation = relation.value;
+            const host = document.getElementById('hostname');
+            const hostname = host.value;
+            const nom = document.getElementById('name');
+            const name = nom.value;
+            // Utiliser Fetch API pour soumettre le formulaire de manière asynchrone
+            if (typeOfRelation==="pere" || "mere") {
+    
+                fetch('http://localhost:8080/api/users/add-user', {
+                    method: 'post',
+                    body: new FormData(form)
+                }).then(response => {
+                    console.log('Formulaire soumis!', response);
+                }).catch(error => {
+                    console.error('Erreur lors de la soumission:', error);
+                });
+
+                fetch('http://localhost:8080/api/users/relatives', {
+                method: 'post',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    hostname: hostname,
+                    name: name
+                })
+                }).then(response => {
+                console.log('Formulaire soumis!', response);
+                }).catch(error => {
+                console.error('Erreur lors de la soumission:', error);
+                });  
+            }
+            else{
+                fetch('http://localhost:8080/api/users/add-user', {
+                    method: 'post',
+                    body: new FormData(form)
+                }).then(response => {
+                    console.log('Formulaire soumis!', response);
+                }).catch(error => {
+                    console.error('Erreur lors de la soumission:', error);
+                });
+
+                fetch('http://localhost:8080/api/users/add-child', {
+                method: 'post',
+                body: {mail , name}
+                }).then(response => {
+                console.log('Formulaire soumis!', response);
+                }).catch(error => {
+                console.error('Erreur lors de la soumission:', error);
+                });
+            }
+            
+        });
+        </script>
     </main>
     <footer>
     </footer>
